@@ -16,4 +16,8 @@ public class Food implements Serializable {
     protected Double servingSize;
     protected Measurement unitOfMeasure;
     protected String type;
+
+    public Food(String type){
+        this.type = type;
+    }
 }

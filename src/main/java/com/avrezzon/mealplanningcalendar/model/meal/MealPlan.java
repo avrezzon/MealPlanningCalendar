@@ -1,6 +1,5 @@
-package com.avrezzon.mealplanningcalendar.model.user;
+package com.avrezzon.mealplanningcalendar.model.meal;
 
-import com.avrezzon.mealplanningcalendar.model.MealType;
 import com.avrezzon.mealplanningcalendar.model.Serving;
 import lombok.AllArgsConstructor;
 import lombok.Data;

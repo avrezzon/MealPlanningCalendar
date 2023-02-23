@@ -5,12 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 public class Carbohydrate extends Food {
 
     public static final Carbohydrate NO_OP = new Carbohydrate();
+
+    public Carbohydrate(){
+        super("CARBOHYDRATE");
+    }
     public Carbohydrate(String name, Double servingSize, Measurement measurement) {
-        super(name, servingSize, measurement, "PROTEIN");
+        super(name, servingSize, measurement, "CARBOHYDRATE");
     }
 
     ;

@@ -1,6 +1,6 @@
-package com.avrezzon.mealplanningcalendar.model.user;
+package com.avrezzon.mealplanningcalendar.model;
 
-import com.avrezzon.mealplanningcalendar.model.CaloricIntake;
+import com.avrezzon.mealplanningcalendar.model.meal.MealPlan;
 import com.avrezzon.mealplanningcalendar.service.MealPlanFactory;
 import lombok.AllArgsConstructor;
 import lombok.Data;

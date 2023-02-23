@@ -1,4 +1,4 @@
-package com.avrezzon.mealplanningcalendar.model;
+package com.avrezzon.mealplanningcalendar.model.meal;
 
 public enum MealType {
     BREAKFAST,

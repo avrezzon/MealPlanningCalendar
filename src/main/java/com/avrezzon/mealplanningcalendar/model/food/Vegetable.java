@@ -5,11 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-public class Vegetable extends Food{
+public class Vegetable extends Food {
 
     public static final Vegetable NO_OP = new Vegetable();
-    public Vegetable (String name, Double servingSize, Measurement measurement){
+
+    public Vegetable() {
+        super("VEGETABLE");
+    }
+
+    public Vegetable(String name, Double servingSize, Measurement measurement) {
         super(name, servingSize, measurement, "VEGETABLE");
     }
 }

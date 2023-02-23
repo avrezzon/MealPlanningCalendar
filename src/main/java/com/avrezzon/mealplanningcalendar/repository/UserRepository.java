@@ -1,6 +1,6 @@
 package com.avrezzon.mealplanningcalendar.repository;
 
-import com.avrezzon.mealplanningcalendar.model.user.User;
+import com.avrezzon.mealplanningcalendar.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
