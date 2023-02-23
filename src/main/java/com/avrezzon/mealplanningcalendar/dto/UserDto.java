@@ -11,9 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
-    private Integer id;
+    private String username;
     private String firstName;
     private String lastName;
     private String email;
-    private CaloricIntake mealPlanType;
+
+    private CaloricIntake intake;
 }

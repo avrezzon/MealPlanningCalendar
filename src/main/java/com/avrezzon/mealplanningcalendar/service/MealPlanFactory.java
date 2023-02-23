@@ -8,6 +8,7 @@ import com.avrezzon.mealplanningcalendar.model.food.Fruit;
 import com.avrezzon.mealplanningcalendar.model.food.Protein;
 import com.avrezzon.mealplanningcalendar.model.food.Vegetable;
 import com.avrezzon.mealplanningcalendar.model.user.Meal;
+import com.avrezzon.mealplanningcalendar.model.user.MealPlan;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +17,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
 @Slf4j
 public class MealPlanFactory {
 
-    public Map<MealType, List<Serving>> getMealPlan(CaloricIntake intakeLevel){
+    public static MealPlan getMealPlan(CaloricIntake intakeLevel){
 
         switch (intakeLevel){
             case CALORIES_1200:
+                return make1200CalorieMealPlan();
+            case CALORIES_2000:
                 return make1200CalorieMealPlan();
             default:
                 log.error("Not really sure how we got here but lets cause a problem");
@@ -31,7 +33,7 @@ public class MealPlanFactory {
         }
     }
 
-    private Map<MealType, List<Serving>> make1200CalorieMealPlan(){
+    private static MealPlan make1200CalorieMealPlan(){
         Map<MealType, List<Serving>> mealPlan = new HashMap<>();
 
         mealPlan.put(MealType.BREAKFAST, List.of(new Serving(1.0, Fruit.NO_OP),
@@ -47,7 +49,7 @@ public class MealPlanFactory {
                 new Serving(1.0, Carbohydrate.NO_OP),
                 new Serving(1.0, Protein.NO_OP)));
 
-        return mealPlan;
+        return new MealPlan(mealPlan);
     }
 
 }
