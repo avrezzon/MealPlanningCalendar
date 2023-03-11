@@ -1,5 +1,7 @@
 spring:
   application:
     name: MealPlanner
+  session:
+    store-type: mongodb
 server:
-  port: 8081
+  port: 8080

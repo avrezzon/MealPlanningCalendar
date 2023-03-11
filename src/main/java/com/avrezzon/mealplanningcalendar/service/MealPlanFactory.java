@@ -1,13 +1,13 @@
 package com.avrezzon.mealplanningcalendar.service;
 
 import com.avrezzon.mealplanningcalendar.model.CaloricIntake;
-import com.avrezzon.mealplanningcalendar.model.meal.MealType;
 import com.avrezzon.mealplanningcalendar.model.Serving;
 import com.avrezzon.mealplanningcalendar.model.food.Carbohydrate;
 import com.avrezzon.mealplanningcalendar.model.food.Fruit;
 import com.avrezzon.mealplanningcalendar.model.food.Protein;
 import com.avrezzon.mealplanningcalendar.model.food.Vegetable;
 import com.avrezzon.mealplanningcalendar.model.meal.MealPlan;
+import com.avrezzon.mealplanningcalendar.model.meal.MealType;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -20,23 +20,19 @@ public class MealPlanFactory {
     public static MealPlan getMealPlan(CaloricIntake intakeLevel) {
 
         switch (intakeLevel) {
-            case CALORIES_1200 -> {
+            case CALORIES_1200:
                 return make1200CalorieMealPlan();
-            }
-            case CALORIES_1500 -> {
+            case CALORIES_1500:
                 return make1500CalorieMealPlan();
-            }
-            case CALORIES_1800 -> {
+            case CALORIES_1800:
                 return make1800CalorieMealPlan();
-            }
-            case CALORIES_2000 -> {
+            case CALORIES_2000:
                 return make2000CalorieMealPlan();
-            }
-            default -> {
+            default:
                 log.error("Not really sure how we got here but lets cause a problem");
                 throw new IllegalStateException("Invalid Caloric intake level selected for meal plan generation");
-            }
         }
+
     }
 
     private static MealPlan make1200CalorieMealPlan() {
@@ -77,6 +73,7 @@ public class MealPlanFactory {
 
         return new MealPlan(mealPlan);
     }
+
     private static MealPlan make1800CalorieMealPlan() {
         Map<MealType, List<Serving>> mealPlan = new HashMap<>();
 
@@ -96,6 +93,7 @@ public class MealPlanFactory {
 
         return new MealPlan(mealPlan);
     }
+
     private static MealPlan make2000CalorieMealPlan() {
         Map<MealType, List<Serving>> mealPlan = new HashMap<>();
 

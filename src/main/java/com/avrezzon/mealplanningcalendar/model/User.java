@@ -3,43 +3,65 @@ package com.avrezzon.mealplanningcalendar.model;
 import com.avrezzon.mealplanningcalendar.model.meal.MealPlan;
 import com.avrezzon.mealplanningcalendar.service.MealPlanFactory;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Data
-@Document("User")
-@NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
-    @Id
-    private String username;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private CaloricIntake mealPlanType;
-    private MealPlan template;
-    private List<MealPlan> plan; //Plan out 7 days?
+@Builder
+@Document("User")
+public class User implements UserDetails {
 
-    public User(String username, String firstName, String lastName, String email, CaloricIntake intake){
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.mealPlanType = (intake != null) ? intake : CaloricIntake.CALORIES_2000;
-        this.template = MealPlanFactory.getMealPlan(this.mealPlanType);
+    @MongoId
+    private ObjectId id;
+    public String username;
+    private String password;
+    private Set<UserRole> userRoles;
+
+    //FIXME
+    //TODO create a mapper to the user dto
+//    private Profile profile;
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.getUserRoles();
     }
 
-    public User(String firstName, String lastName, String email){
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.mealPlanType = CaloricIntake.CALORIES_2000;
-        this.template = MealPlanFactory.getMealPlan(CaloricIntake.CALORIES_2000);
+    @Override
+    public String getPassword() {
+        return this.password;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
