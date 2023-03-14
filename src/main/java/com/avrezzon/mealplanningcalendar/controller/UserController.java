@@ -3,9 +3,11 @@ package com.avrezzon.mealplanningcalendar.controller;
 import com.avrezzon.mealplanningcalendar.dto.UserRegistrationDto;
 import com.avrezzon.mealplanningcalendar.model.User;
 import com.avrezzon.mealplanningcalendar.service.UserManagementService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,10 +36,11 @@ public class UserController {
                 .orElseThrow(() -> new IllegalStateException(""));
     }
 
+    //TODO figure out the role based stuff later.
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public List<User> getAllRegisteredUsers() {
         log.info("Retreiving all of the registered users");
-//        session.getAttribute("PASSW")
         return service.getUsers();
     }
 //

@@ -37,8 +37,9 @@ public class SecurityConfig{
                         "/swagger-resources/**","/configuration/security","/swagger-ui.html","/webjars/**").permitAll()
                 .requestMatchers("/user").hasRole("USER")
                 .anyRequest().authenticated()
-                .and().formLogin();
-        http.sessionManagement()
+                .and().formLogin()
+                .and().logout()
+                .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
         return http.build();
     }

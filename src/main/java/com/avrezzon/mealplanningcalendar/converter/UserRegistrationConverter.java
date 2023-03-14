@@ -1,6 +1,7 @@
 package com.avrezzon.mealplanningcalendar.converter;
 
 import com.avrezzon.mealplanningcalendar.dto.UserRegistrationDto;
+import com.avrezzon.mealplanningcalendar.model.CaloricIntake;
 import com.avrezzon.mealplanningcalendar.model.User;
 import com.avrezzon.mealplanningcalendar.model.UserRole;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class UserRegistrationConverter implements Converter<UserRegistrationDto,
                 .email(source.getEmail())
                 .firstname(source.getFirstname())
                 .lastname(source.getLastname())
+                .mealPlanType(CaloricIntake.CALORIES_2000) //Default for new users
                 .build();
     }
 }

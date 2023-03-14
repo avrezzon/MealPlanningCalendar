@@ -1,5 +1,6 @@
 package com.avrezzon.mealplanningcalendar.model;
 
+import com.avrezzon.mealplanningcalendar.model.meal.MealPlan;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -19,7 +21,7 @@ import java.util.Set;
 public class User implements UserDetails {
 
     @MongoId
-    private ObjectId id;
+    private String id;
     public String username;
     private String password;
     private Set<UserRole> userRoles;
@@ -28,9 +30,9 @@ public class User implements UserDetails {
     private String firstname;
     private String lastname;
 
-    //FIXME
-    //TODO create a mapper to the user dto
-//    private Profile profile;
+    private CaloricIntake mealPlanType;
+    private MealPlan template;
+    private List<MealPlan> plan; //Plan out 7 days?
 
 
     @Override
