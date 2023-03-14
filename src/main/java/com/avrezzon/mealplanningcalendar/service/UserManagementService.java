@@ -1,26 +1,17 @@
 package com.avrezzon.mealplanningcalendar.service;
 
-import com.avrezzon.mealplanningcalendar.dto.UserDto;
-import com.avrezzon.mealplanningcalendar.exception.ResourceNotFoundException;
-import com.avrezzon.mealplanningcalendar.model.CaloricIntake;
-import com.avrezzon.mealplanningcalendar.model.Role;
+import com.avrezzon.mealplanningcalendar.dto.UserRegistrationDto;
 import com.avrezzon.mealplanningcalendar.model.User;
-import com.avrezzon.mealplanningcalendar.model.UserRole;
 import com.avrezzon.mealplanningcalendar.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 @Slf4j
@@ -28,28 +19,23 @@ import java.util.Set;
 public class UserManagementService implements UserDetailsService {
 
     private final UserRepository repository;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final Converter converter;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = repository.findUserByUsername(username);
 
-        if(user == null)
+        if (user == null)
             throw new UsernameNotFoundException(username);
         return user;
     }
 
-    public User registerNewUser(){
-        User user = User.builder()
-                .userRoles(Set.of(new UserRole(new Role("ADMIN"))))
-                .username("johnny101")
-                .password(passwordEncoder.encode("password"))
-                .build();
+    public User registerNewUser(User user) {
         log.info(user.toString());
         return repository.save(user);
     }
 
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return repository.findAll();
     }
 /*

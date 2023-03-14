@@ -8,10 +8,10 @@ import org.springframework.security.core.GrantedAuthority;
 @AllArgsConstructor
 public class UserRole implements GrantedAuthority {
 
-    private Role role;
+    private String role;
 
     @Override
     public String getAuthority() {
-        return role.getName();
+        return role;
     }
 }

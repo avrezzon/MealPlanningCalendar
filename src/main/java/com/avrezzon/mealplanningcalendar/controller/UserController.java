@@ -1,15 +1,18 @@
 package com.avrezzon.mealplanningcalendar.controller;
 
+import com.avrezzon.mealplanningcalendar.converter.UserRegistrationConverter;
+import com.avrezzon.mealplanningcalendar.dto.UserRegistrationDto;
 import com.avrezzon.mealplanningcalendar.model.User;
 import com.avrezzon.mealplanningcalendar.service.UserManagementService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -17,22 +20,27 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
+    private final ConversionService converter;
     private final UserManagementService service;
 
 
     @PostMapping("register")
-    public User createUser(){
-        log.info("creating user");
-        return service.registerNewUser();
+    public User createUser(@RequestBody UserRegistrationDto dto) {
+        log.info("Received request to create user: {}", dto.getUsername());
+        log.debug("Attempting to convert the request");
+        Optional<User> userToRegister = Optional.ofNullable(converter.convert(dto, User.class));
+        return userToRegister.map(service::registerNewUser)
+                .map(user -> {
+                    log.info("Sucessfully registered new user: {}", user);
+                    return user;
+                })
+                .orElseThrow(() -> new IllegalStateException(""));
     }
 
-
-//    @GetMapping
-
     @GetMapping
-//    @RolesAllowed("ADMIN")
-    public List<User> getAllRegisteredUsers() {
+    public List<User> getAllRegisteredUsers(HttpSession session) {
         log.info("Retreiving all of the registered users");
+//        session.getAttribute("PASSW")
         return service.getUsers();
     }
 //

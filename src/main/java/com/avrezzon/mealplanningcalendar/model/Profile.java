@@ -9,9 +9,7 @@ import java.util.List;
 
 @Data
 public class Profile implements Serializable {
-    private String firstName;
-    private String lastName;
-    private String email;
+
     private CaloricIntake mealPlanType;
     private MealPlan template;
     private List<MealPlan> plan; //Plan out 7 days?
