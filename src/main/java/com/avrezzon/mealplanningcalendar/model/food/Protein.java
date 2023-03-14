@@ -2,8 +2,11 @@ package com.avrezzon.mealplanningcalendar.model.food;
 
 import com.avrezzon.mealplanningcalendar.model.Measurement;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
+
 public class Protein extends Food{
 
     public static final Protein NO_OP = new Protein();

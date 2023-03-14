@@ -1,16 +1,13 @@
 package com.avrezzon.mealplanningcalendar.controller;
 
-import com.avrezzon.mealplanningcalendar.converter.UserRegistrationConverter;
 import com.avrezzon.mealplanningcalendar.dto.UserRegistrationDto;
 import com.avrezzon.mealplanningcalendar.model.User;
 import com.avrezzon.mealplanningcalendar.service.UserManagementService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +35,7 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllRegisteredUsers(HttpSession session) {
+    public List<User> getAllRegisteredUsers() {
         log.info("Retreiving all of the registered users");
 //        session.getAttribute("PASSW")
         return service.getUsers();

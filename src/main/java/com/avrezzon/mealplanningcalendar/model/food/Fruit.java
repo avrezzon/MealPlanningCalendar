@@ -1,12 +1,10 @@
 package com.avrezzon.mealplanningcalendar.model.food;
 
 import com.avrezzon.mealplanningcalendar.model.Measurement;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class Fruit extends Food {
 
     public static final Fruit NO_OP = new Fruit();
