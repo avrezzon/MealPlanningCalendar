@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -40,7 +41,7 @@ public class UserController {
 
     @GetMapping
     public UserDto getCurrentLoggedInUser(HttpSession session){
-        User user = SessionUtilities.getCurrentUser(session);
+        User user = service.findUser(session);
         return converter.convert(user, UserDto.class);
     }
 

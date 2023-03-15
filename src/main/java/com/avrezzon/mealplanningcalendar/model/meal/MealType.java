@@ -1,6 +1,8 @@
 package com.avrezzon.mealplanningcalendar.model.meal;
 
-public enum MealType {
+import java.io.Serializable;
+
+public enum MealType implements Serializable {
     BREAKFAST,
     MID_MORNING_SNACK,
     LUNCH,

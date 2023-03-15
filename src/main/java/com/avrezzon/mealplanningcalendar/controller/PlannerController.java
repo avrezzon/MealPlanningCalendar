@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PlannerController {
     @PostMapping
     public ProfileDto generateSampleMealPlan(HttpSession session){
-        User currentUser = SessionUtilities.getCurrentUser(session);
+//        User currentUser = SessionUtilities.getCurrentUser(session);
 
         return null;
     }

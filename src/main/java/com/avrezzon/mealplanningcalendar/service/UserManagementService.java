@@ -2,6 +2,8 @@ package com.avrezzon.mealplanningcalendar.service;
 
 import com.avrezzon.mealplanningcalendar.model.User;
 import com.avrezzon.mealplanningcalendar.repository.UserRepository;
+import com.avrezzon.mealplanningcalendar.util.SessionUtilities;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -30,6 +32,15 @@ public class UserManagementService implements UserDetailsService {
         return user;
     }
 
+    public User findUser(HttpSession session){
+        UserDetails details = SessionUtilities.getCurrentUser(session);
+        return findUser(details.getUsername());
+    }
+
+    public User findUser(String username){
+        return Optional.ofNullable(repository.findUserByUsername(username))
+                .orElseThrow(() -> new IllegalStateException("Cannot find registered username"));
+    }
     public User registerNewUser(User user) {
         log.info("Attempting to create user: {}", user.getUsername());
         //TODO add steps to verify that the username or the email doesnt already exist
@@ -92,9 +103,6 @@ public class UserManagementService implements UserDetailsService {
         repository.deleteById(username);
     }*/
 
-    public User findUser(String username){
-        return Optional.ofNullable(repository.findUserByUsername(username))
-                .orElseThrow(() -> new IllegalStateException("Cannot find registered username"));
-    }
+
 
 }
