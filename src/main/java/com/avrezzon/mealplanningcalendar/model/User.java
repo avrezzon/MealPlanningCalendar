@@ -1,17 +1,14 @@
 package com.avrezzon.mealplanningcalendar.model;
 
-import com.avrezzon.mealplanningcalendar.model.meal.MealPlan;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -30,9 +27,7 @@ public class User implements UserDetails {
     private String firstname;
     private String lastname;
 
-    private CaloricIntake mealPlanType;
-    private MealPlan template;
-    private List<MealPlan> plan; //Plan out 7 days?
+    private MealProfile mealProfile;
 
 
     @Override

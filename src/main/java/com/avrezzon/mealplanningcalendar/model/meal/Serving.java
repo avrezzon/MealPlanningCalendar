@@ -1,4 +1,4 @@
-package com.avrezzon.mealplanningcalendar.model;
+package com.avrezzon.mealplanningcalendar.model.meal;
 
 import com.avrezzon.mealplanningcalendar.model.food.Food;
 import lombok.AllArgsConstructor;

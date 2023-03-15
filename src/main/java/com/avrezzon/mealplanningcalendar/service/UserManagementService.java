@@ -1,17 +1,17 @@
 package com.avrezzon.mealplanningcalendar.service;
 
-import com.avrezzon.mealplanningcalendar.dto.UserRegistrationDto;
 import com.avrezzon.mealplanningcalendar.model.User;
 import com.avrezzon.mealplanningcalendar.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.convert.converter.Converter;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -19,7 +19,7 @@ import java.util.List;
 public class UserManagementService implements UserDetailsService {
 
     private final UserRepository repository;
-    private final Converter converter;
+    private final ConversionService converter;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -31,7 +31,8 @@ public class UserManagementService implements UserDetailsService {
     }
 
     public User registerNewUser(User user) {
-        log.info(user.toString());
+        log.info("Attempting to create user: {}", user.getUsername());
+        //TODO add steps to verify that the username or the email doesnt already exist
         return repository.save(user);
     }
 
@@ -90,5 +91,10 @@ public class UserManagementService implements UserDetailsService {
 
         repository.deleteById(username);
     }*/
+
+    public User findUser(String username){
+        return Optional.ofNullable(repository.findUserByUsername(username))
+                .orElseThrow(() -> new IllegalStateException("Cannot find registered username"));
+    }
 
 }

@@ -1,7 +1,7 @@
 package com.avrezzon.mealplanningcalendar.service;
 
 import com.avrezzon.mealplanningcalendar.model.CaloricIntake;
-import com.avrezzon.mealplanningcalendar.model.Serving;
+import com.avrezzon.mealplanningcalendar.model.meal.Serving;
 import com.avrezzon.mealplanningcalendar.model.food.Carbohydrate;
 import com.avrezzon.mealplanningcalendar.model.food.Fruit;
 import com.avrezzon.mealplanningcalendar.model.food.Protein;
@@ -20,17 +20,22 @@ public class MealPlanFactory {
     public static MealPlan getMealPlan(CaloricIntake intakeLevel) {
 
         switch (intakeLevel) {
-            case CALORIES_1200:
+            case CALORIES_1200 -> {
                 return make1200CalorieMealPlan();
-            case CALORIES_1500:
+            }
+            case CALORIES_1500 -> {
                 return make1500CalorieMealPlan();
-            case CALORIES_1800:
+            }
+            case CALORIES_1800 -> {
                 return make1800CalorieMealPlan();
-            case CALORIES_2000:
+            }
+            case CALORIES_2000 -> {
                 return make2000CalorieMealPlan();
-            default:
+            }
+            default -> {
                 log.error("Not really sure how we got here but lets cause a problem");
                 throw new IllegalStateException("Invalid Caloric intake level selected for meal plan generation");
+            }
         }
 
     }

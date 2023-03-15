@@ -2,20 +2,20 @@ package com.avrezzon.mealplanningcalendar.converter;
 
 import com.avrezzon.mealplanningcalendar.dto.UserRegistrationDto;
 import com.avrezzon.mealplanningcalendar.model.CaloricIntake;
+import com.avrezzon.mealplanningcalendar.model.MealProfile;
 import com.avrezzon.mealplanningcalendar.model.User;
 import com.avrezzon.mealplanningcalendar.model.UserRole;
-import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-@Component
-@RequiredArgsConstructor
+//@Component
 public class UserRegistrationConverter implements Converter<UserRegistrationDto, User> {
 
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @Override
     public User convert(UserRegistrationDto source) {
         return User.builder()
@@ -25,7 +25,7 @@ public class UserRegistrationConverter implements Converter<UserRegistrationDto,
                 .email(source.getEmail())
                 .firstname(source.getFirstname())
                 .lastname(source.getLastname())
-                .mealPlanType(CaloricIntake.CALORIES_2000) //Default for new users
+                .mealProfile(new MealProfile(CaloricIntake.CALORIES_2000)) //Default for new users
                 .build();
     }
 }

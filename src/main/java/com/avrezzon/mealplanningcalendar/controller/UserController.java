@@ -1,16 +1,16 @@
 package com.avrezzon.mealplanningcalendar.controller;
 
+import com.avrezzon.mealplanningcalendar.dto.UserDto;
 import com.avrezzon.mealplanningcalendar.dto.UserRegistrationDto;
 import com.avrezzon.mealplanningcalendar.model.User;
 import com.avrezzon.mealplanningcalendar.service.UserManagementService;
-import jakarta.annotation.security.RolesAllowed;
+import com.avrezzon.mealplanningcalendar.util.SessionUtilities;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -22,9 +22,10 @@ public class UserController {
     private final ConversionService converter;
     private final UserManagementService service;
 
+    //TODO figure out the role based stuff later.
 
     @PostMapping("register")
-    public User createUser(@RequestBody UserRegistrationDto dto) {
+    public UserDto createUser(@RequestBody UserRegistrationDto dto) {
         log.info("Received request to create user: {}", dto.getUsername());
         log.debug("Attempting to convert the request");
         Optional<User> userToRegister = Optional.ofNullable(converter.convert(dto, User.class));
@@ -33,16 +34,28 @@ public class UserController {
                     log.info("Sucessfully registered new user: {}", user);
                     return user;
                 })
+                .map(user -> converter.convert(user, UserDto.class))
                 .orElseThrow(() -> new IllegalStateException(""));
     }
 
-    //TODO figure out the role based stuff later.
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public List<User> getAllRegisteredUsers() {
-        log.info("Retreiving all of the registered users");
-        return service.getUsers();
+    public UserDto getCurrentLoggedInUser(HttpSession session){
+        User user = SessionUtilities.getCurrentUser(session);
+        return converter.convert(user, UserDto.class);
     }
+
+    @GetMapping("/session")
+    public void getSessionDetails(HttpSession session){
+        log.info("Printing out the context for the current session");
+        //SPRING_SECURITY_CONTEXT has the context of the User.class
+        session.getAttributeNames()
+                .asIterator()
+                .forEachRemaining(item -> {
+                    log.info("Attribute name: {}", item);
+                    log.info("Attribute details: {}", session.getAttribute(item));
+                });
+    }
+
 //
 //    @GetMapping("/{username}")
 //    public User findUser(@PathVariable String username) {
