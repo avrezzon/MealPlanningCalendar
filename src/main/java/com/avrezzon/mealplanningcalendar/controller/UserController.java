@@ -4,14 +4,13 @@ import com.avrezzon.mealplanningcalendar.dto.UserDto;
 import com.avrezzon.mealplanningcalendar.dto.UserRegistrationDto;
 import com.avrezzon.mealplanningcalendar.model.User;
 import com.avrezzon.mealplanningcalendar.service.UserManagementService;
-import com.avrezzon.mealplanningcalendar.util.SessionUtilities;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Slf4j
@@ -40,8 +39,8 @@ public class UserController {
     }
 
     @GetMapping
-    public UserDto getCurrentLoggedInUser(HttpSession session){
-        User user = service.findUser(session);
+    public UserDto getCurrentLoggedInUser(Principal principal){
+        User user = service.findUser(principal.getName());
         return converter.convert(user, UserDto.class);
     }
 
